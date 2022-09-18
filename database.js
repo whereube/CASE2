@@ -9,17 +9,12 @@ const client = new Client({
     database: 'carshop'
 })
 
-// client.query('select * from carmodels', (err, res) => {
-//     console.log(res, err)
-// })
-
 export const getCarmodels = async () => {
     try{
         const data = await new Promise((resolve, reject) => {
             client.connect()
             client.query('select * from carmodels', (err, res) => {
                 if(!err){
-                    console.log("Hit")
                     resolve(res.rows)
                 } else {
                     console.log(err.message);
