@@ -6,7 +6,7 @@ const client = new Client({
     user: 'teodor',
     port: 5432,
     password: 'freebird',
-    database: 'carshop'
+    database: 'carshop_2'
 })
 
 client.connect()
@@ -24,6 +24,25 @@ export const getCarmodels = async () => {
             })
         });
         return data
+    } catch (e){
+        console.log(e)
+    }
+}
+
+export const getEmployee = async (employeeId) => {
+    try{
+        const result = await new Promise((resolve, reject) => {
+            client.query('select * from employees where id = $1', [employeeId], (err, res) => {
+                if(!err){
+                    resolve(res.rows)
+                    client.end;
+                } else {
+                    console.log(err.message);
+                    reject(err.message)
+                }
+            })
+        });
+        return result
     } catch (e){
         console.log(e)
     }
