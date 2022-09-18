@@ -47,3 +47,21 @@ export const getCar = async (carId) => {
         console.log(e)
     }
 }
+
+export const getEmployees = async () => {
+    try{
+        const list = await new Promise((resolve, reject) => {
+            client.query('select * from employees', (err, res) => {
+                if(!err){
+                    resolve(res.rows)
+                } else {
+                    console.log(err.message);
+                    reject(err.message)
+                }
+            })
+        });
+        return list
+    } catch (e){
+        console.log(e)
+    }
+}
