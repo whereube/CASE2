@@ -6,31 +6,27 @@ const client = new Client({
     user: 'teodor',
     port: 5432,
     password: 'freebird',
-    database: 'teodor'
+    database: 'carshop'
 })
 
-client.query('select * from carmodels', (err, res) => {
-    console.log(res, err)
-})
+// client.query('select * from carmodels', (err, res) => {
+//     console.log(res, err)
+// })
 
 export const getCarmodels = async () => {
     try{
         const data = await new Promise((resolve, reject) => {
-            try {
-                client.query('select * from carmodels', (err, res) => {
-                    console.log("hoppsan")
-                    if(!err){
-                        console.log("Hit")
-                        resolve(res.rows)
-                    } else {
-                        console.log(err.message);
-                        reject(err.message)
-                    }
-                    client.end;
-                })
-            } catch (e){
-                console.log(e)
-            }
+            client.connect()
+            client.query('select * from carmodels', (err, res) => {
+                if(!err){
+                    console.log("Hit")
+                    resolve(res.rows)
+                } else {
+                    console.log(err.message);
+                    reject(err.message)
+                }
+                client.end()
+            })
         });
         return data
     } catch (e){
