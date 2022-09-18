@@ -1,10 +1,10 @@
 import express from 'express'
 const app = express()
 import expressEjsLayouts from 'express-ejs-layouts'
-import {router} from './routes/index.js'
+import {indexRouter} from './routes/index.js'
 import path from 'path'
-
 import { fileURLToPath } from 'url'; 
+
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
@@ -15,6 +15,6 @@ app.set('layout', 'layouts/layout')
 app.use(expressEjsLayouts) 
 app.use(express.static('public'))
 
-app.use('/', router)
+app.use('/', indexRouter)
 
 app.listen(3000)

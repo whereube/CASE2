@@ -255,7 +255,7 @@ footer li{
 }
 
 .main-art-img:hover{
-
+    background-image: url(./BMW-2.jpg);
     background-position: center;
 }
 

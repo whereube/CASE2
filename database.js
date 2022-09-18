@@ -9,10 +9,11 @@ const client = new Client({
     database: 'carshop'
 })
 
+client.connect()
+
 export const getCarmodels = async () => {
     try{
         const data = await new Promise((resolve, reject) => {
-            client.connect()
             client.query('select * from carmodels', (err, res) => {
                 if(!err){
                     resolve(res.rows)
@@ -20,7 +21,6 @@ export const getCarmodels = async () => {
                     console.log(err.message);
                     reject(err.message)
                 }
-                client.end()
             })
         });
         return data
@@ -29,16 +29,21 @@ export const getCarmodels = async () => {
     }
 }
 
-// export const getCar = async (selectedCar) => {
-//     const data = await new Promise((resovle, reject) => {
-//         client.query('select id, brand, model, price where id = $1', [selectedCar], (err, res) => {
-//             if(!err){
-//                 resolve(res.rows)
-//             } else {
-//                 console.log(err.message);
-//                 reject(err.message)
-//             }
-//             client.end;
-//         })
-//     })
-// }
+export const getCar = async (carId) => {
+    try{
+        const result = await new Promise((resolve, reject) => {
+            client.query('select * from carmodels where id = $1', [carId], (err, res) => {
+                if(!err){
+                    resolve(res.rows)
+                    client.end;
+                } else {
+                    console.log(err.message);
+                    reject(err.message)
+                }
+            })
+        });
+        return result
+    } catch (e){
+        console.log(e)
+    }
+}
